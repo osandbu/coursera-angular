@@ -50,8 +50,10 @@ function ShoppingListCheckOffService() {
   }
 
   service.buyItem = function(index) {
+    console.log("Tried to buy" + index)
+
     var boughtItem = toBuyList.splice(index, 1)[0];
-    boughtList.add(item);
+    boughtList.push(boughtItem);
   }
 }
 
