@@ -32,7 +32,7 @@
      <h2>To Buy:</h2>
      <ul>
        <li ng-repeat="item in toBuy.items">
-         Buy {{item.quantity}} {{item.name}}
+         Buy {{item.toString()}}
          <button class="btn btn-default" ng-click="toBuy.buy($index);">
            <span class="glyphicon glyphicon-ok"></span> Bought
          </button>

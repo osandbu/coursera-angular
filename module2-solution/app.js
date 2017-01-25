@@ -48,8 +48,6 @@ function ShoppingListCheckOffService() {
   }
 
   service.buy = function(index) {
-    console.log("Tried to buy" + index)
-
     var boughtItem = toBuyList.splice(index, 1)[0];
     boughtList.push(boughtItem);
   }
