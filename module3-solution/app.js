@@ -9,49 +9,48 @@ angular.module('NarrowItDownApp', [])
 function FoundItemsDirective() {
   var ddo = {
     restrict: "E",
-    template: "foundItems.html",
+    templateUrl: "foundItems.html",
     scope: {
-      foundItems: '<',
-      onRemove: '&'
-    }
+      foundItems: "<",
+      onRemove: "&"
+    },
+    controller: FoundItemsDirectiveController,
+    controllerAs: "vm",
+    bindToController: true
   };
   return ddo;
 }
 
+function FoundItemsDirectiveController() {
+}
+
 NarrowItDownController.$inject = ["MenuSearchService"];
 function NarrowItDownController(MenuSearchService) {
-  var controller = this;
-  controller.query = "";
-  controller.found = [];
-  controller.findMenuItems = function() {
-    controller.found =
-      MenuSearchService.getMatchedMenuItems(controller.query);
+  var vm = this;
+  vm.query = "";
+  vm.found = [];
+  vm.findMenuItems = function() {
+    MenuSearchService.getMatchedMenuItems(vm.query)
+    .then(function(data) {
+      vm.found = data;
+      console.log(vm.found);
+    });
+
   }
-  controller.remove = function(index) {
-    controller.found.splice(index,1);
+  vm.removeMenuItem = function(index) {
+    vm.found.splice(index,1);
   }
 }
 
 MenuSearchService.$inject = ["$http"];
 function MenuSearchService($http) {
   var service = this;
-  this.getMatchedMenuItems = function(searchTerm) {
+  service.getMatchedMenuItems = function(searchTerm) {
     return $http.get("http://davids-restaurant.herokuapp.com/menu_items.json")
     .then(function successCallback(response) {
-      var menuItems = response.data.menu_items;
-      var foundItems = [];
-      // process result and only keep items that match
-      for (var i = 0; i < menuItems.length; i++) {
-        var menuItem = menuItems[i];
-        if (menuItem.description.indexOf(searchTerm) !== -1) {
-          foundItems.push(menuItems[i]);
-          console.log(menuItem);
-        }
-      }
-      // return processed items
-      return foundItems;
-    }, function errorCallback(response) {
-      console.log("Error: ", response.status);
+      return response.data.menu_items.filter(function(item) {
+        return item.description.indexOf(searchTerm) > -1;
+      });
     });
   }
 }
