@@ -43,7 +43,7 @@ MenuSearchService.$inject = ["$http"];
 function MenuSearchService($http) {
   var service = this;
   service.getMatchedMenuItems = function(searchTerm) {
-    return $http.get("http://davids-restaurant.herokuapp.com/menu_items.json")
+    return $http.get("https://davids-restaurant.herokuapp.com/menu_items.json")
     .then(function successCallback(response) {
       if (!searchTerm) {
         return [];
