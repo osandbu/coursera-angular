@@ -2,9 +2,9 @@
   <ul class="list-group">
     <li ng-repeat="item in vm.foundItems" class="list-group-item row">
       <div class="col-xs-9">
-        <h4>{{item.name}}
-          <span class="badge">{{item.price_small | currency}}</span>
-          <span class="badge">{{item.price_large | currency}}</span>
+        <h4>
+          <span class="badge">{{item.short_name}}</span>
+          {{item.name}}
         </h4>
         <p class="list-group-item-text">
           {{item.description}}
